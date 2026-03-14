@@ -12,4 +12,6 @@ class bankaccount{
     int getaccountnumber() const;
     void writetofile();
     void readfromfile();
+    void searchaccount(int num);
+    void deposit(int num);
 };

@@ -43,6 +43,48 @@ void bankaccount::readfromfile(){
         displayaccount();
     }
     infile.close();
+    }
 
-
+void bankaccount::searchaccount(int num){
+    bankaccount acc;
+    ifstream infile;
+    infile.open("account.dat",ios::binary);
+    bool found=false;
+    while(infile.read(reinterpret_cast<char *>(&acc),sizeof(bankaccount))){
+    if(acc.getaccountnumber()==num){
+        cout<<"account found";
+        acc.displayaccount();
+        found = true; 
+       break;
+    }
+    }
+    infile.close();
+    if(!found){
+        cout<<"\n account is not found";
+    }
 }
+
+void bankaccount::deposit(int num){
+    bankaccount acc;
+    fstream iffile;
+    iffile.open("account.dat",ios::binary|ios::in|ios::out);
+    bool found = false;
+    while(iffile.read(reinterpret_cast<char *>(&acc),sizeof(bankaccount))){
+        if(acc.getaccountnumber() == num){
+            double amount;
+            cout<<"enter money to be deposited = ";
+            cin>>amount;
+            acc.balance+=amount;
+            iffile.seekp(-sizeof(bankaccount),ios::cur);
+            iffile.write(reinterpret_cast<char*>(&acc),sizeof(bankaccount));
+            cout<<"\n money deposited sucessfully";
+            found=true;
+            break;
+            
+        }
+    }
+    iffile.close();
+    if(!found){
+        cout<<"\n account not found";
+    }
+    }
