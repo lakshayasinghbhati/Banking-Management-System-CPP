@@ -5,7 +5,7 @@ class bankaccount{
     private:
     int accountnumber;
     double balance;
-    string name;
+    char name[50];
     public:
     void createaccount();
     void displayaccount() const;
@@ -14,4 +14,5 @@ class bankaccount{
     void readfromfile();
     void searchaccount(int num);
     void deposit(int num);
+    void withdraw(int num);
 };

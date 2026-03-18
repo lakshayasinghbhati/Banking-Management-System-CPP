@@ -32,18 +32,17 @@ void bankaccount::writetofile(){
     cout<<"record saved to file";
 }
 
-void bankaccount::readfromfile(){
-    ifstream infile;
-    infile.open("account.dat",ios::binary);
-    if(!infile){
-        cout<<"file not found";
-        return;
+// 
+void bankaccount::readfromfile() {
+    bankaccount acc;
+    ifstream infile("account.dat", ios::binary);
+
+    while (infile.read((char*)&acc, sizeof(bankaccount))) {
+        acc.displayaccount();
     }
-    while(infile.read(reinterpret_cast<char*>(this),sizeof(*this))){
-        displayaccount();
-    }
+
     infile.close();
-    }
+}
 
 void bankaccount::searchaccount(int num){
     bankaccount acc;
@@ -77,14 +76,43 @@ void bankaccount::deposit(int num){
             acc.balance+=amount;
             iffile.seekp(-sizeof(bankaccount),ios::cur);
             iffile.write(reinterpret_cast<char*>(&acc),sizeof(bankaccount));
-            cout<<"\n money deposited sucessfully";
+            cout<<"\n money deposited sucessfully"<<endl;
             found=true;
             break;
             
         }
     }
-    iffile.close();
+iffile.close();
     if(!found){
         cout<<"\n account not found";
     }
     }
+    void bankaccount::withdraw(int num){
+        bankaccount acc;
+        fstream iffile;
+        iffile.open("account.dat",ios::in|ios::out|ios::binary);
+        bool found = false;
+        double amount;
+        while(iffile.read(reinterpret_cast<char*>(&acc),sizeof(bankaccount))){
+            if(acc.getaccountnumber()== num){
+                cout<<"Enter amount to withdraw: ";
+                cin>>amount;
+                if(acc.balance>=amount){
+                    acc.balance-=amount;
+                    iffile.seekp(-sizeof(bankaccount),ios::cur);
+                    iffile.write(reinterpret_cast<char*>(&acc),sizeof(bankaccount));
+                    cout<<"Withdrawal successful";
+                }
+                else{
+                    cout<<"Insufficient balance";
+                }
+                found=true;
+                break;
+            }
+            iffile.close();
+            if(!found){
+                cout<<"\nAccount not found";
+            }
+        }
+}
+    

@@ -11,7 +11,8 @@ int main(){
     cout<<"2. display all accounts\n";
     cout<<"3.search account \n";
     cout<<"4.deposit moeny \n";
-    cout<<"5. exit\n";
+    cout<<"5.withdraw money \n";
+    cout<<"6. exit\n";
     cin>>choice;
     switch(choice){
         case 1 : {
@@ -25,19 +26,26 @@ int main(){
             }
         case 3 : {
             int num;
-            cout<<"enter account number ";
+            cout<<"enter account number :";
             cin>>num;
             acc.searchaccount(num);
             break;
                 }
         case 4: {
             int num;
-            cout<<"enter account number ";
+            cout<<"enter account number :";
             cin>>num;
             acc.deposit(num);
             break;
         }        
         case 5: {
+            int num ;
+            cout<<"enter account number :";
+            cin>>num;
+            acc.withdraw(num);
+            break;
+        }
+        case 6: {
             cout<<"thankyou";
             break;
                 }
